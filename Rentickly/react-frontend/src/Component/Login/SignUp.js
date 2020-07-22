@@ -26,15 +26,32 @@ class SignUp extends React.Component {
 
       valid: false,
     };
-    this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.getLoginData = this.getLoginData.bind(this);
   }
 
   onSubmit(e) {
     e.preventDefault();
-    this.onFormSubmit(e);
-    if (this.state.valid) {
+    // this.onFormSubmit(e);
+    const { password, email, confirmemail } = this.state;
+    const validEmailRegex = RegExp(
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    );
+    var validName = /^([\w]{3,})+\s+([\w\s]{3,})+$/i;
+    if (!validEmailRegex.test(email)) {
+      alert("Type a valid email id");
+    } else if (!validName.test(this.state.username)) {
+      alert(
+        "Type a valid username.Fullname with first name and last name seperated by space and atleast of length 3 each"
+      );
+    } else if (password.length < 5) {
+      alert("Password should be of atleast 5 characters length");
+    } else if (email !== confirmemail) {
+      alert("Email id does not match");
+    } else {
+      //   this.setState({ valid: true });
+      // }
+      // if (this.state.valid) {
       axios
         .post("/users/register", {
           username: this.state.username,
@@ -54,9 +71,6 @@ class SignUp extends React.Component {
         .catch((err) => {
           console.log(err);
         });
-      // register(newUser).then((res) => {
-      //   this.props.history.push(`/SignIn`);
-      // });
     }
   }
   getLoginData = (value, type) =>
@@ -64,25 +78,26 @@ class SignUp extends React.Component {
       [type]: value,
     });
 
-  onFormSubmit = (e) => {
-    e.preventDefault();
-    const { username, password, email, confirmemail } = this.state;
-    const validEmailRegex = RegExp(
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    );
-    const validName = RegExp(/^([\w]{3,})+\s+([\w\s]{3,})+$/i);
-    if (!validEmailRegex.test(email)) {
-      alert("Type a valid email id");
-    } else if (validName.test(username)) {
-      alert("Type a valid username. Fullname with first name and last name seperated by space and atleast of length 3 each");
-    } else if (password.length < 5) {
-      alert("Password should be of atleast 5 characters length");
-    } else if (email !== confirmemail) {
-      alert("Email id does not match");
-    } else {
-      this.setState({ valid: true });
-    }
-  };
+  // onFormSubmit = (e) => {
+  //   const { username, password, email, confirmemail } = this.state;
+  //   const validEmailRegex = RegExp(
+  //     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  //   );
+  //   var validName = /^([\w]{3,})+\s+([\w\s]{3,})+$/i;
+  //   if (!validEmailRegex.test(email)) {
+  //     alert("Type a valid email id");
+  //   } else if (!validName.test(this.state.username)) {
+  //     alert(
+  //       "Type a valid username.Fullname with first name and last name seperated by space and atleast of length 3 each"
+  //     );
+  //   } else if (password.length < 5) {
+  //     alert("Password should be of atleast 5 characters length");
+  //   } else if (email !== confirmemail) {
+  //     alert("Email id does not match");
+  //   } else {
+  //     this.setState({ valid: true });
+  //   }
+  // };
 
   render() {
     return (
@@ -117,8 +132,7 @@ class SignUp extends React.Component {
                           group
                           type="text"
                           validate
-                          // defaultValue={this.state.username}
-                          // onChange={this.onChange}
+                          required
                           getValue={(value) =>
                             this.getLoginData(value, "username")
                           }
@@ -129,8 +143,7 @@ class SignUp extends React.Component {
                           group
                           type="email"
                           validate
-                          //defaultValue={this.state.email}
-                          // onChange={this.onChange}
+                          required
                           getValue={(value) =>
                             this.getLoginData(value, "email")
                           }
@@ -141,8 +154,7 @@ class SignUp extends React.Component {
                           group
                           type="email"
                           validate
-                          //defaultValue={this.state.cemail}
-                          // onChange={this.onChange}
+                          required
                           getValue={(value) =>
                             this.getLoginData(value, "confirmemail")
                           }
@@ -154,8 +166,6 @@ class SignUp extends React.Component {
                           type="password"
                           validate
                           containerClass="mb-0"
-                          // defaultValue={this.state.password}
-                          // onChange={this.onChange}
                           getValue={(value) =>
                             this.getLoginData(value, "password")
                           }
@@ -165,24 +175,6 @@ class SignUp extends React.Component {
                           Already Registered?
                           <MDBLink to="SignIn">Sign In</MDBLink>
                         </div>
-
-                        {/* <div className="text-center">
-                          or Sign in with:
-                          <a href="https://myaccount.google.com/">
-                            <MDBBtn
-                              type="button"
-                              gradient="blue"
-                              rounded="true"
-                              className="mr-md-3 z-depth-1a"
-                            >
-                              <MDBIcon
-                                fab
-                                icon="google-plus-g"
-                                className="white-text text-center "
-                              />
-                            </MDBBtn>
-                          </a>
-                        </div> */}
 
                         <div className="text-center">
                           <MDBBtn

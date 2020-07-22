@@ -46,7 +46,6 @@ def register():
     result = ""
     if rv:
         return result
-    print("username:"+username, "email:"+email, "password:" + password)
     cur.execute("INSERT INTO Users(username,email,password) VALUES (%s, %s,%s)",
                 (username, email, password))
 
@@ -70,20 +69,18 @@ def login():
     result = ""
     print("email:" + email)
     print("pass:"+password)
-    cur.execute("SELECT * from Users where email=%s",[email])
+    cur.execute("SELECT * from Users where email=%s", [email])
     rv = cur.fetchone()
     if not rv:
-        print("here")
         return result
         # return jsonify({"error": "Invalid username"})
     if bcrypt.check_password_hash(rv['password'], password):
-        print("there")
+
         access_token = create_access_token(
-            identity={'userid':rv['userId'],'username': rv['username'], 'email': rv['email']})
+            identity={'userid': rv['userId'], 'username': rv['username'], 'email': rv['email']})
         result = access_token
     # else:
     #     result = jsonify({"error": "Invalid username and password"})
-    print("out")
     return result
 
 
@@ -135,8 +132,13 @@ def update():
         "email": email,
         "username": username
     }
+    cur.execute("SELECT * from Users where email=%s", [email])
+    rv = cur.fetchone()
+    access_token = create_access_token(
+        identity={'userid': rv['userId'], 'username': rv['username'], 'email': rv['email']})
+    result = access_token
 
-    return jsonify({"result": result})
+    return result
 
 
 app.run(debug=True)

@@ -30,7 +30,6 @@ class Profile extends Component {
   handleChange = (e) => {
     e.preventDefault();
     var validuser = /^([\w]{3,})+\s+([\w\s]{3,})+$/i;
-    console.log("newname" + this.state.newname);
     if ((this.state.newname.length > 2) & validuser.test(this.state.newname)) {
       axios
         .post("/users/update", {
@@ -40,7 +39,8 @@ class Profile extends Component {
             : this.state.username,
         })
         .then((res) => {
-          // localStorage.removeItem("access_token");
+          localStorage.removeItem("access_token");
+          localStorage.setItem("access_token", JSON.stringify(res.data));
           alert("Profile Updated");
           this.props.history.push(`/Profile`);
         })
@@ -48,7 +48,9 @@ class Profile extends Component {
           console.log(err);
         });
     } else {
-      alert("Enter valid username");
+      alert(
+        "Enter valid username.  Fullname with first name and last name seperated by space and atleast of length 3 each "
+      );
     }
   };
   handleChangeonreset = (e) => {
@@ -94,16 +96,7 @@ class Profile extends Component {
               <tbody>
                 <tr>
                   <td>Email id</td>
-                  <td>
-                    {/* <input
-                      type="text"
-                      name="email"
-                      placeholder={this.state.email}
-                      getValue={(value) => this.getLoginData(value, "email")}
-                      disabled
-                    /> */}
-                    {this.state.email}
-                  </td>
+                  <td>{this.state.email}</td>
                 </tr>
                 <tr>
                   <td>User Name</td>
