@@ -3,7 +3,7 @@ import { Drawer, IconButton, Divider, Menu } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
+import "./NavBar.css";
 import { useHistory } from "react-router";
 
 function NavBars() {
@@ -44,6 +44,11 @@ function NavBars() {
   const userLink = (
     <ul className="navbar-nav" float="right">
       <li className="nav-item">
+        <Link className="nav-link" to="/myAds">
+            My Advertisements
+          </Link>
+      </li>
+      <li className="nav-item">
         <Link className="nav-link" to="/Profile">
           Profile
         </Link>
@@ -78,7 +83,7 @@ function NavBars() {
         </Link>
       </li>
       <li className="nav__main-item">
-        <Link className="nav__bar-link" to="/PostAdvertisement">
+        <Link className="nav__bar-link" to="/postAd">
           Post Ad
         </Link>
       </li>

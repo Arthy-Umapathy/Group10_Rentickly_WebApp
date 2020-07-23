@@ -2,9 +2,10 @@ import flask
 from flask import json, jsonify, request
 from flask_mysqldb import MySQL
 from datetime import datetime
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from model import Model 
 from flask_jwt_extended import (create_access_token)
 
 app = flask.Flask("__main__")
@@ -236,6 +237,47 @@ def acceptappointment(i, j):
     mysql.connection.commit()
 
     return "accepted"
+    
+    
+@app.route("/postAd/post", methods=['POST'])
+def postAdvertisement():
+    dbObject = Model() 
+    ad_data = request.get_json() 
+
+    dbObject.postAdvertisement(ad_data)
+
+    return json.dumps(ad_data)
+
+@app.route("/user/getAds", methods=['POST', 'GET'])
+@cross_origin(origin='*')
+def getAdvertisements(): 
+    dbObject = Model() 
+    email_data = request.get_json() 
+
+    email = email_data['email']
+
+    records = dbObject.getAdvertisements(email)
+    recordsObj = [] 
+    for record in records:
+        recordsObj.append({ 
+            'aId': record[0],  
+            'adTitle': record[1],
+            'userId': record[2],
+            'propertyType': record[3],
+            'propertyAddress': record[4],
+            'zipCode': record[5],
+            'propertyDescription': record[6],
+            'petFriendly': record[7],
+            'leaseType': record[8], 
+            'propertyLocation': record[9],
+            'contactTiming': record[10],
+            'applicationStatus': record[11]
+  })
+    # records.headers.add("Access-Control-Allow-Origin", "*")
+    
+    return json.dumps({ 
+        "record": recordsObj  
+    }) 
 
 
 app.run(debug=True)

@@ -6,6 +6,22 @@ import * as serviceWorker from './serviceWorker';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import firebase from "firebase/app"; 
+import "firebase/storage"; 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyANXri9H0HkZmXlLjWoWrH7MEvcwQKNr4I",
+  authDomain: "rentickly.firebaseapp.com",
+  databaseURL: "https://rentickly.firebaseio.com",
+  projectId: "rentickly",
+  storageBucket: "rentickly.appspot.com",
+  messagingSenderId: "512000623567",
+  appId: "1:512000623567:web:3e872dda05f51d7d2048ba"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const storage = firebase.storage(); 
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,3 +34,6 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+
+export { storage, firebase as default }; 

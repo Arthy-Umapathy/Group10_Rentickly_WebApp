@@ -18,15 +18,17 @@ import SignIn from "./Component/Login/SignIn";
 import Resetpassword from "./Component/LandingPage/Resetpassword";
 import Profile from "./Component/Login/Profile";
 import UpdateProfile from "./Component/Login/UpdateProfile";
-import Review from "./Component/Review/review";
-import PostAdvertisement from "./Component/PostAdvertisment/PostAdvertisment";
+import Review from "./Component/Review/Review";
+import PostAdvertisement from "./Component/PostAdvertisement/PostAd";
 //import Home from "./Component/SearchBar/Home";
 import RentalApplication from "./Component/RentalApplication/RentalApplication";
 import BookAppointment from "./Component/BookAppointment/BookAppointment";
 import WishlistPage from "./Component/Wishlist/index";
 import ViewPost from "./Component/ViewPost/ViewPostPage";
 import ViewAppointment from "./Component/ViewAppointment/ViewAppointment";
-import AppointmentsWithMe from "./Component/AppointmentsWithMe/AppointmentsWithMe"
+import AppointmentsWithMe from "./Component/AppointmentsWithMe/AppointmentsWithMe"; 
+import MyAdvertisements from "./Component/Advertisements/MyAdvertisements"; 
+import ViewAdvertisement from "./Component/Advertisements/ViewAdvertisement"; 
 
 class App extends Component {
   render() {
@@ -48,10 +50,12 @@ class App extends Component {
           <Route exact path="/Review" component={Review} />
           <Route exact path="/ViewPost" component={ViewPost} />
           <Route exact path="/wishlist" component={WishlistPage} />
+          <Route exact path="/myAds" component={MyAdvertisements} />
+          <Route exact path="/myAds/ad/:id" component={ViewAdvertisement} />
           {/* <Route exact path="/Search" component={Home} /> */}
           <Route
             exact
-            path="/PostAdvertisement"
+            path="/postAd"
             component={PostAdvertisement}
           />
           <Route

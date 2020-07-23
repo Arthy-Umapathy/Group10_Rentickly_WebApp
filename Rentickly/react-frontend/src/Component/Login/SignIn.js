@@ -47,6 +47,7 @@ class SignIn extends Component {
         .then((res) => {
           if (res.data) {
             localStorage.setItem("access_token", JSON.stringify(res.data));
+            localStorage.setItem('email', email);
             this.props.history.push(`/Profile`);
           } else {
             alert("Register to sign in");
