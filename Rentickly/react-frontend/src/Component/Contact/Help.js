@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import NavBar from "../LandingPage/NavBar";
 import Fade from "react-reveal/Fade";
 import img from "./contact.jpg";
-// import Footer from "../Footer/Footer";
+import Footer from "../Footer/Footer";
 import {
   MDBContainer,
   MDBBtn,
@@ -20,6 +20,8 @@ class Help extends Component {
       userName: "",
       message: "",
       email: "",
+      subject: "Feedback",
+      redirect: false,
     };
   }
 
@@ -28,9 +30,15 @@ class Help extends Component {
       [type]: value,
     });
 
+    handleChange = (event) => {
+      // console.log("message" + event.target.message.value);
+      const { name, value } = event.target;
+      this.setState({ [name]: value }, () => console.log(this.state));
+    };
+
   onFormSubmit = (e) => {
     e.preventDefault();
-    const { userName, message, email } = this.state;
+    const { userName, email, message, subject} = this.state;
     const validEmailRegex = RegExp(
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
     );
@@ -39,6 +47,24 @@ class Help extends Component {
     } else if (!validEmailRegex.test(email)) {
       alert("Type a valid emailid");
     } else {
+      // Adding message to database
+      console.log("username" + this.state.userName);
+      console.log("email" + this.state.email);
+      console.log("message" + this.state.message);
+      console.log("subject" + this.state.subject);
+
+      fetch("/registercomplaint", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(this.state),
+      })
+        .then(() => {
+          this.setState({ redirect: true });
+          console.log("redirect" + this.state.redirect);
+        })
+        .catch(function () {
+          console.log("error");
+        });
       alert("Successfully logged in");
     }
   };
@@ -79,6 +105,7 @@ class Help extends Component {
                             <MDBInput
                               type="text"
                               label="Name"
+                              name="userName"
                               id="materialContactFormName"
                               className="form-control"
                               getValue={(value) =>
@@ -91,6 +118,7 @@ class Help extends Component {
                             <MDBInput
                               type="email"
                               label="E-mail"
+                              name="email"
                               id="materialContactFormEmail"
                               className="form-control"
                               getValue={(value) =>
@@ -100,26 +128,20 @@ class Help extends Component {
                           </div>
 
                           <span>Subject</span>
-                          <select className="mdb-select">
-                            <option value="" disabled>
-                              Choose option
-                            </option>
-                            <option value="1" selected>
-                              Feedback
-                            </option>
-                            <option value="2">Report a bug</option>
-                            <option value="3">Feature request</option>
+                          <select name= "subject" id="subject" className="mdb-select" onChange={this.handleChange}>
+                            <option value="Feedback" >Feedback</option>
+                            <option value="BugReport">Report a bug</option>
+                            <option value="FeatureRequest">Feature request</option>
                           </select>
 
                           <div className="md-form">
                             <textarea
                               id="materialContactFormMessage"
                               placeholder="Message"
+                              name="message"
                               className="form-control md-textarea"
                               rows="3"
-                              getValue={(value) =>
-                                this.getLoginData(value, "message")
-                              }
+                              onChange={this.handleChange}
                             ></textarea>
                           </div>
 
@@ -142,7 +164,7 @@ class Help extends Component {
             <br />
           </Fade>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     );
   }

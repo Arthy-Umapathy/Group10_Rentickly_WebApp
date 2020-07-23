@@ -63,6 +63,16 @@ function NavBars() {
         </Link>
       </li>
       <li className="nav__main-item">
+        <Link className="nav__bar-link" to="/ViewAppointment">
+          View Appointment
+        </Link>
+      </li>
+      <li className="nav__main-item">
+        <Link className="nav__bar-link" to="/AppointmentsWithMe">
+          Requested Appointments with me
+        </Link>
+      </li>
+      <li className="nav__main-item">
         <Link className="nav__bar-link" to="/RentalApplication">
           Rental Application
         </Link>

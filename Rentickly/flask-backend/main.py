@@ -140,5 +140,102 @@ def update():
 
     return result
 
+@app.route("/getappointmentsscheduledwithme/<userId>")
+def getappointmentsscheduledwithme(userId):
+    cur = mysql.connection.cursor()
+    appointmentStatus = "false"
+    print('userId' +userId)
+    cur.execute("SELECT a1.userId, a2.aId, a2.adTitle FROM bookAppointment a1, advertisements a2 WHERE a1.aId = a2.aId AND a1.appointmentstatus=%s  AND a2.userId=%s", (appointmentStatus, userId))
+    rv = cur.fetchall()
+    rv = json.dumps(rv, default=str)
+    cur.close()
+    return rv
+
+@app.route("/getallappointments/<userId>")
+def getallappointments(userId):
+    cur = mysql.connection.cursor()
+    print('userId' +userId)
+    cur.execute("SELECT * FROM bookAppointment WHERE userId=%s", [userId])
+    rv = cur.fetchall()
+    rv = json.dumps(rv, default=str)
+    cur.close()
+    return rv
+
+@app.route("/addappointment/<aId>", methods = ['POST'])
+def addappointment(aId):
+    cur = mysql.connection.cursor()
+    fname = request.get_json()['firstName']
+    lname = request.get_json()['lastName']
+    email = request.get_json()['email']
+    date = request.get_json()['appointmentDate']
+    time = request.get_json()['myTime']
+    userId = request.get_json()['userId']
+    appointmentStatus = "false"
+
+    cur.execute("INSERT INTO bookAppointment (firstname, lastname, email, date, time, appointmentstatus, userId, aId) VALUES('" +
+    str(fname) + "','" +
+    str(lname) + "','" +
+    str(email) + "','" +
+    str(date) + "','" +
+    str(time) + "','" +
+    str(appointmentStatus) + "','" +
+    str(userId) + "','" +
+    str(aId) + "')")
+
+    mysql.connection.commit()
+
+    result = {
+        "fname" : fname,
+        "lname" : lname,
+        "email" : email,
+        "date" : date,
+        "time" : time,
+        "appointmentStatus" : appointmentStatus,
+        "userId" : userId,
+        "aId" : aId
+    }
+
+    return jsonify({"result": result})
+
+@app.route("/registercomplaint", methods = ["POST"])
+def registercomplaint():
+    cur = mysql.connection.cursor()
+    userName = request.get_json()["userName"]
+    email = request.get_json()["email"]
+    subject = request.get_json()["subject"]
+    message = request.get_json()["message"]
+
+    cur.execute("INSERT INTO contactUs (name, email, subject, message) VALUES('" +
+    str(userName) + "','" +
+    str(email) + "','" +
+    str(subject) + "','" +
+    str(message) + "')")
+
+    mysql.connection.commit()
+
+    # msg = Message("Your issue is registered successfully. Our support team will get in touch with you asap.", sender="rentickly@gmail.com")
+    # msg.add_recipient(email)
+    # msg.body = "Your issue is registered successfully. Our support team will get in touch with you asap."
+    # mail.send(msg)
+
+    result = {
+        "userName" : userName,
+        "email" : email,
+        "subject" : subject,
+        "message" : message,
+    }
+
+    return jsonify({"result": result})
+
+@app.route("/acceptappointment/<i>/<j>", methods = ["POST"])
+def acceptappointment(i, j):
+    cur = mysql.connection.cursor()
+    appointmentStatus = "true"
+    cur.execute("UPDATE bookAppointment SET appointmentstatus=%s WHERE userId=%s AND aId=%s", (appointmentStatus, i , j))
+
+    mysql.connection.commit()
+
+    return "accepted"
+
 
 app.run(debug=True)

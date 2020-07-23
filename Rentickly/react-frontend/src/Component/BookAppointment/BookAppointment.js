@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import "./BookAppointment.css";
 import NavBar from "../LandingPage/NavBar";
 import Footer from "../Footer/Footer";
+import jwt_decode from "jwt-decode";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -38,7 +39,11 @@ class BookAppointment extends Component {
   constructor(props) {
     super(props);
 
+    const token = localStorage.access_token;
+    const decoded = jwt_decode(token);
+
     this.state = {
+      userId: decoded.identity.userid,
       firstName: null,
       lastName: null,
       email: null,
@@ -72,6 +77,8 @@ class BookAppointment extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
+    let aId = 8273;
+
     if (
       formValid(
         this.state.formErrors,
@@ -90,10 +97,25 @@ class BookAppointment extends Component {
         Date : ${this.state.appointmentDate}
         Time : ${this.state.myTime}
         `);
-      this.setState({
-        redirect: true,
-      });
+
+        // Adding appointments to database
+        fetch("/addappointment/" + aId, {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(this.state),
+        })
+          .then(() => {
+            this.setState({ redirect: true });
+            console.log("redirect" + this.state.redirect);
+          })
+          .catch(function () {
+            console.log("error");
+          });
+      // this.setState({
+      //   redirect: true,
+      // });
       alert("Appointment application submitted successfully");
+      // this.props.history.push('/SignIn');
     } else {
       alert("Enter valid details. Appointment schedule failed");
       console.error(` Form Invalid `);
@@ -167,9 +189,9 @@ class BookAppointment extends Component {
     const { formErrors } = this.state;
     const redirect = this.state.redirect;
 
-    if (redirect === true) {
-      return <Redirect to="/LoginPage" />;
-    }
+    // if (redirect === true) {
+    //   return <Redirect to="/SignIn" />;
+    // }
 
     return (
       <div>
