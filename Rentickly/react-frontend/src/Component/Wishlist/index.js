@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardColumns, Button } from "react-bootstrap";
 import NavBar from "../LandingPage/NavBar";
-
+import "./SearchBar.css";
 import room1 from "../../assets/Room1.jpg";
 import room2 from "../../assets/Room2.gif";
 import room3 from "../../assets/Room3.png";
@@ -77,7 +77,16 @@ class Findroom extends Component {
     return (
       <div className="mt-5">
         <NavBar />
-
+        <div class="search">
+        <input
+          type="text"
+          class="searchTerm"
+          placeholder="What are you looking for?"
+        />
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
+        </div>
         <CardColumns className="container-fluid">
           {Property.map((room, index) => {
             return (

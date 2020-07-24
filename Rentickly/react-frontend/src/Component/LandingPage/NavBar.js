@@ -98,8 +98,8 @@ function NavBars() {
         </Link>
       </li>
       <li className="nav__main-item">
-        <Link className="nav__bar-link" to="/Search">
-          Search Rooms
+        <Link className="nav__bar-link" to="/wishlist">
+          Favourites
         </Link>
       </li>
       <li className="nav__main-item">
@@ -118,7 +118,7 @@ function NavBars() {
     <ul className="nav__main-items">
       <li className="nav__main-item">
         <Link className="nav__bar-link" to="/wishlist">
-          Favourites
+          Search Rooms
         </Link>
       </li>
       <li className="nav__main-item">
