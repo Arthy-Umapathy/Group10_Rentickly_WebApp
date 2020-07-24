@@ -39,14 +39,19 @@ function NavBars() {
           Register
         </Link>
       </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/Review">
+          Review
+        </Link>
+      </li>
     </ul>
   );
   const userLink = (
     <ul className="navbar-nav" float="right">
       <li className="nav-item">
         <Link className="nav-link" to="/myAds">
-            My Advertisements
-          </Link>
+          My Advertisements
+        </Link>
       </li>
       <li className="nav-item">
         <Link className="nav-link" to="/Profile">
