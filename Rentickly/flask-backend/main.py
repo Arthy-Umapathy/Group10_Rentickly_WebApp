@@ -334,12 +334,6 @@ def add_review():
                 )
 
                 conn.commit()
-
-                update_query = "UPDATE advertisements SET reviewId = %s WHERE aId = %s;"
-
-                cursor.execute(update_query, (reviewId, aid))
-
-                conn.commit()
             finally:
                 conn.close()
             break
