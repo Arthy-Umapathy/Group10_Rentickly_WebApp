@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Card, CardColumns, Button } from "react-bootstrap";
 import NavBar from "../LandingPage/NavBar";
 
@@ -71,40 +71,57 @@ const Property = [
       "Te duo diceret temporibus, suas civibus pri ad. Cu adhuc ipsum oratio vel, et fugit perpetua vel. Graeci omnium te eam, pro molestie temporibus ne. Assum saepe id cum. Vel inani utroque indoctum ea, rationibus consectetuer id vix. Cu qui idque labore, meis primis quo at, meis facilisis te mea.",
     image: room2,
   },
-];
-class Findroom extends Component {
-  render() {
-    return (
-      <div className="mt-5">
-        <NavBar />
+];function Findroom (){
+  const[rooms, setRooms] = useState([]);
+  useEffect( () => {
+    fetch('http://0.0.0.0:5000/user/search').then(response =>
+      response.json().then(data => {
 
-        <CardColumns className="container-fluid">
-          {Property.map((room, index) => {
-            return (
-              <Card key={index} className="col-lg-12 mb-5 ml-auto mr-3">
-                <Card.Img variant="top" src={room.image} />
-                <Card.Body>
-                  <Card.Title>{room.city}</Card.Title>
-                  <Card.Text className="pt-1">{room.description}</Card.Text>
-                  <Card.Text>
-                    <strong>${room.price}</strong>/Month
-                  </Card.Text>
-                  <Button
-                    onClick={() => {
-                      alert("Property has been added to your wishlist.!");
-                    }}
-                  >
-                    Add to Wishlist
-                  </Button>
-                </Card.Body>
-              </Card>
-            );
-          })}
-        </CardColumns>
-        <Footer />
+        setRooms(data.Data)
+      })
+    )
+  }, []);
+  console.log(rooms);
+  return (
+    <div className="mt-5">
+      <NavBar />
+      <div class="search">
+      <input
+        type="text"
+        class="searchTerm"
+        placeholder="What are you looking for?"
+      />
+      <button type="submit" class="searchButton">
+        <i class="fa fa-search"></i>
+      </button>
       </div>
-    );
-  }
+      <CardColumns className="container-fluid">
+        {Property.map((room, index) => {
+          return (
+            <Card key={index} className="col-lg-12 mb-5 ml-auto mr-3">
+              <Card.Img variant="top" src={room.image} />
+              <Card.Body>
+                <Card.Title>{room.city}</Card.Title>
+                <Card.Text className="pt-1">{room.description}</Card.Text>
+                <Card.Text>
+                  <strong>${room.price}</strong>/Month
+                </Card.Text>
+                <Button
+                  onClick={() => {
+                    alert("Property has been added to your wishlist.!");
+                  }}
+                >
+                  Add to Wishlist
+                </Button>
+              </Card.Body>
+            </Card>
+          );
+        })}
+      </CardColumns>
+      <Footer />
+    </div>
+  );
 }
+
 
 export default Findroom;
