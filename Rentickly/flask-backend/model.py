@@ -80,6 +80,17 @@ class Model:
     def editAdertisement(self):
         pass 
 
+    def getAllAdvertisement(self):
+        dbCursor = self.dbConnection.cursor() 
+        query = f"select aId, adTitle, propertyAddress, propertyDescription, rentAmount from advertisements" 
+        dbCursor.execute(query)
+        records = dbCursor.fetchall() 
+        self.dbConnection.commit() 
+        self.dbConnection.close()  
+        print(records)   
+        return records     
+
+
 
 
 
