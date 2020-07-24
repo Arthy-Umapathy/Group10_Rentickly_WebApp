@@ -33,7 +33,7 @@ class ViewAdvertisement extends React.Component {
             data: { aid: aid, userId: userId, house_name: adTitle },
           }}
         >
-          <Button>View Advertisement</Button>
+          <Button>Add Review</Button>
         </Link>
         <Footer />
       </div>
