@@ -5,7 +5,9 @@ import StarRatings from "react-star-ratings";
 
 class Review extends Component {
   state = {
-    house_name: "",
+    aid: this.props.location.data.aid,
+    userId: this.props.location.data.userId,
+    house_name: this.props.location.data.house_name,
     headline: "",
     content: "",
     rating: 0,
@@ -18,10 +20,7 @@ class Review extends Component {
   };
 
   submitData() {
-    const { headline, content, rating } = this.state;
-    // console.log(headline);
-    // console.log(content);
-    // console.log(rating);
+    const { headline, content, rating, aid, userId } = this.state;
 
     fetch("http://0.0.0.0:5000/users/review", {
       mode: "cors",
@@ -30,9 +29,11 @@ class Review extends Component {
       cache: "no-cache",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        headline: this.state.headline,
-        content: this.state.content,
-        rating: this.state.rating,
+        headline: headline,
+        content: content,
+        rating: rating,
+        aid: aid,
+        userId: userId,
       }),
     })
       .then((response) => {
@@ -63,7 +64,7 @@ class Review extends Component {
     }
   };
   render() {
-    const { status } = this.state;
+    const { status, house_name } = this.state;
     var STATUS = "";
     if (status !== "") {
       STATUS = <h1>Review Submitted</h1>;
@@ -73,7 +74,7 @@ class Review extends Component {
         <NavBar />
         <div className="reviews">
           <form>
-            <h1>House Name</h1>
+            <h1>{house_name}</h1>
             <div class="form-group">
               <label for="formGroupExampleInput">Headline</label>
               <input

@@ -44,6 +44,11 @@ function NavBars() {
           Review
         </Link>
       </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/myAds">
+          myAds
+        </Link>
+      </li>
     </ul>
   );
   const userLink = (

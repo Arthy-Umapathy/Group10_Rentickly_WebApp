@@ -5,7 +5,7 @@ from datetime import datetime
 from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
-from model import Model 
+from model import Model
 from flask_jwt_extended import (create_access_token)
 import pymysql
 import pymysql.cursors as cursors
@@ -73,8 +73,8 @@ def login():
     email = request.get_json()['email']
     password = request.get_json()['password']
     result = ""
-    print("email:" + email)
-    print("pass:"+password)
+    # print("email:" + email)
+    # print("pass:"+password)
     cur.execute("SELECT * from Users where email=%s", [email])
     rv = cur.fetchone()
     if not rv:
@@ -146,28 +146,31 @@ def update():
 
     return result
 
+
 @app.route("/getappointmentsscheduledwithme/<userId>")
 def getappointmentsscheduledwithme(userId):
     cur = mysql.connection.cursor()
     appointmentStatus = "false"
-    print('userId' +userId)
+    print('userId' + userId)
     cur.execute("SELECT a1.userId, a2.aId, a2.adTitle FROM bookAppointment a1, advertisements a2 WHERE a1.aId = a2.aId AND a1.appointmentstatus=%s  AND a2.userId=%s", (appointmentStatus, userId))
     rv = cur.fetchall()
     rv = json.dumps(rv, default=str)
     cur.close()
     return rv
 
+
 @app.route("/getallappointments/<userId>")
 def getallappointments(userId):
     cur = mysql.connection.cursor()
-    print('userId' +userId)
+    print('userId' + userId)
     cur.execute("SELECT * FROM bookAppointment WHERE userId=%s", [userId])
     rv = cur.fetchall()
     rv = json.dumps(rv, default=str)
     cur.close()
     return rv
 
-@app.route("/addappointment/<aId>", methods = ['POST'])
+
+@app.route("/addappointment/<aId>", methods=['POST'])
 def addappointment(aId):
     cur = mysql.connection.cursor()
     fname = request.get_json()['firstName']
@@ -179,31 +182,32 @@ def addappointment(aId):
     appointmentStatus = "false"
 
     cur.execute("INSERT INTO bookAppointment (firstname, lastname, email, date, time, appointmentstatus, userId, aId) VALUES('" +
-    str(fname) + "','" +
-    str(lname) + "','" +
-    str(email) + "','" +
-    str(date) + "','" +
-    str(time) + "','" +
-    str(appointmentStatus) + "','" +
-    str(userId) + "','" +
-    str(aId) + "')")
+                str(fname) + "','" +
+                str(lname) + "','" +
+                str(email) + "','" +
+                str(date) + "','" +
+                str(time) + "','" +
+                str(appointmentStatus) + "','" +
+                str(userId) + "','" +
+                str(aId) + "')")
 
     mysql.connection.commit()
 
     result = {
-        "fname" : fname,
-        "lname" : lname,
-        "email" : email,
-        "date" : date,
-        "time" : time,
-        "appointmentStatus" : appointmentStatus,
-        "userId" : userId,
-        "aId" : aId
+        "fname": fname,
+        "lname": lname,
+        "email": email,
+        "date": date,
+        "time": time,
+        "appointmentStatus": appointmentStatus,
+        "userId": userId,
+        "aId": aId
     }
 
     return jsonify({"result": result})
 
-@app.route("/registercomplaint", methods = ["POST"])
+
+@app.route("/registercomplaint", methods=["POST"])
 def registercomplaint():
     cur = mysql.connection.cursor()
     userName = request.get_json()["userName"]
@@ -212,10 +216,10 @@ def registercomplaint():
     message = request.get_json()["message"]
 
     cur.execute("INSERT INTO contactUs (name, email, subject, message) VALUES('" +
-    str(userName) + "','" +
-    str(email) + "','" +
-    str(subject) + "','" +
-    str(message) + "')")
+                str(userName) + "','" +
+                str(email) + "','" +
+                str(subject) + "','" +
+                str(message) + "')")
 
     mysql.connection.commit()
 
@@ -225,47 +229,50 @@ def registercomplaint():
     # mail.send(msg)
 
     result = {
-        "userName" : userName,
-        "email" : email,
-        "subject" : subject,
-        "message" : message,
+        "userName": userName,
+        "email": email,
+        "subject": subject,
+        "message": message,
     }
 
     return jsonify({"result": result})
 
-@app.route("/acceptappointment/<i>/<j>", methods = ["POST"])
+
+@app.route("/acceptappointment/<i>/<j>", methods=["POST"])
 def acceptappointment(i, j):
     cur = mysql.connection.cursor()
     appointmentStatus = "true"
-    cur.execute("UPDATE bookAppointment SET appointmentstatus=%s WHERE userId=%s AND aId=%s", (appointmentStatus, i , j))
+    cur.execute("UPDATE bookAppointment SET appointmentstatus=%s WHERE userId=%s AND aId=%s",
+                (appointmentStatus, i, j))
 
     mysql.connection.commit()
 
     return "accepted"
-    
-    
+
+
 @app.route("/postAd/post", methods=['POST'])
 def postAdvertisement():
-    dbObject = Model() 
-    ad_data = request.get_json() 
+    dbObject = Model()
+    ad_data = request.get_json()
 
     dbObject.postAdvertisement(ad_data)
 
     return json.dumps(ad_data)
 
+
 @app.route("/user/getAds", methods=['POST', 'GET'])
 @cross_origin(origin='*')
-def getAdvertisements(): 
-    dbObject = Model() 
-    email_data = request.get_json() 
+def getAdvertisements():
+    dbObject = Model()
+    email_data = request.get_json()
 
     email = email_data['email']
 
     records = dbObject.getAdvertisements(email)
-    recordsObj = [] 
+    recordsObj = []
     for record in records:
-        recordsObj.append({ 
-            'aId': record[0],  
+        recordsObj.append({
+            'aId': record[0],
             'adTitle': record[1],
             'userId': record[2],
             'propertyType': record[3],
@@ -273,16 +280,17 @@ def getAdvertisements():
             'zipCode': record[5],
             'propertyDescription': record[6],
             'petFriendly': record[7],
-            'leaseType': record[8], 
+            'leaseType': record[8],
             'propertyLocation': record[9],
             'contactTiming': record[10],
             'applicationStatus': record[11]
-  })
+        })
     # records.headers.add("Access-Control-Allow-Origin", "*")
-    
-    return json.dumps({ 
-        "record": recordsObj  
-    }) 
+
+    return json.dumps({
+        "record": recordsObj
+    })
+
 
 @app.route("/users/review", methods=["POST"])
 @cross_origin()
@@ -296,6 +304,10 @@ def add_review():
     review_content = str(request.json["content"])
     # rating
     rating = str(request.json["rating"])
+    # user id
+    userId = str(request.json["userId"])
+    # adId
+    aid = str(request.json["aid"])
 
     while True:
         # create connection
@@ -314,18 +326,26 @@ def add_review():
 
                 cursor = conn.cursor()
 
-                insert_query = "insert into Review(reviewId,reviewHead,rating,reviewDesc) values (%s,%s,%s,%s)"
+                insert_query = "insert into Review(reviewId,reviewHead,rating,reviewDesc,userId,aId) values (%s,%s,%s,%s,%s,%s)"
 
                 cursor.execute(
-                    insert_query, (reviewId, headline, rating, review_content)
+                    insert_query, (reviewId, headline, rating,
+                                   review_content, userId, aid)
                 )
+
+                conn.commit()
+
+                update_query = "UPDATE advertisements SET reviewId = %s WHERE aId = %s;"
+
+                cursor.execute(update_query, (reviewId, aid))
 
                 conn.commit()
             finally:
                 conn.close()
             break
         else:
-            logging.log(msg="Unable to connect to Database", level=logging.debug)
+            logging.log(msg="Unable to connect to Database",
+                        level=logging.debug)
     return jsonify({"Result": "Inserted Successfully"})
 
 
