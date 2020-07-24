@@ -22,7 +22,7 @@ class Review extends Component {
   submitData() {
     const { headline, content, rating, aid, userId } = this.state;
 
-    fetch("http://0.0.0.0:5000/users/review", {
+    fetch("/users/review", {
       mode: "cors",
       crossDomain: true,
       method: "POST",
