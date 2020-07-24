@@ -291,6 +291,14 @@ def getAdvertisements():
         "record": recordsObj
     })
 
+@app.route("/user/search", methods=['GET'])
+def getAdvertisementsforSearch(): 
+    dbObject = Model() 
+    records = dbObject.getAllAdvertisement()
+    return json.dumps({ 
+        "record": records  
+    }) 
+
 
 @app.route("/users/review", methods=["POST"])
 @cross_origin()
