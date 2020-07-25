@@ -352,12 +352,31 @@ def add_review():
     return jsonify({"Result": "Inserted Successfully"})
 
 
+@app.route("/viewReview", methods=['POST'])
+@cross_origin() 
+def viewReview():
+    data = request.get_json()
+    dbObject = Model() 
+    print(data)
+    records = dbObject.ViewReview(data['aid']) 
+    
+    jsonObj = []
+    for record in records:
+        jsonObj.append(
+            { "rId": record[0],
+            "rating": record[1],
+            "headline": record[2],
+            "description": record[3]    }
+        )
+    return json.dumps({ "result": jsonObj  }) 
+
+
 @app.route('/rentalForm', methods=['POST'])
 def rentalForm():
     data = request.get_json()
     print(data)
-    userId = 1007
     formData = data['data']
+    userId = formData['userId']
     firstname = formData['firstname']
     lastname = formData['lastname']
     email = formData['email']
@@ -382,24 +401,23 @@ def rentalForm():
     return response
 
 
-@app.route('/myapplications', methods=['GET'])
-def myApplications():
+@app.route('/myapplications/<userId>', methods=['GET'])
+def myApplications(userId):
     cur = mysql.connection.cursor()
-    query_string = "SELECT * FROM rentalApplication"
+    query_string = "SELECT * FROM rentalApplication where userId="+userId
     cur.execute(query_string)
-
+    formData = []
     data = cur.fetchall()
 
-    string = data[0]['files']
-    filename = string.decode('ASCII')
-    # print(data[0]['firstname'])
-
-    formData = {'firstname': data[0]['firstname'], 'lastname': data[0]['lastname'], 'email': data[0]['email'], 'userid': data[0]['userId'], 'phone': data[0]
-                ['phone'], 'employer': data[0]['employer'], 'status': data[0]['e_status'], 'files': filename, 'income': data[0]['income'], 'dob': data[0]['dob']}
+    if(len(data) != 0):
+        for i in range(len(data)):
+            string = data[i]['files']
+            filename = string.decode('ASCII')
+            formData.append({'firstname': data[i]['firstname'], 'lastname': data[i]['lastname'], 'email': data[i]['email'], 'userid': data[i]['userId'], 'phone': data[i]
+                             ['phone'], 'employer': data[i]['employer'], 'status': data[i]['e_status'], 'files': filename, 'income': data[i]['income'], 'dob': data[i]['dob']})
 
     response = Response(json.dumps(
         formData), status=200, mimetype="application/json")
-    print(response)
     return response
 
 

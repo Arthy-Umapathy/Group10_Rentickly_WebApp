@@ -77,8 +77,14 @@ class Model:
         self.dbConnection.close()     
         return records     
 
-    def editAdertisement(self):
-        pass 
+    def ViewReview(self, aid):
+        dbCursor = self.dbConnection.cursor() 
+        query = f"select * from Review where aId = '{aid}'"
+        dbCursor.execute(query) 
+        records = dbCursor.fetchall() 
+        
+        self.dbConnection.close()  
+        return records 
 
     def getAllAdvertisement(self):
         dbCursor = self.dbConnection.cursor() 
