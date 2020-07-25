@@ -1,5 +1,5 @@
 import flask
-from flask import json, jsonify, request, Flask
+from flask import json, jsonify, request, Flask, Response
 from flask_mysqldb import MySQL
 from datetime import datetime
 from flask_cors import CORS, cross_origin
@@ -291,13 +291,14 @@ def getAdvertisements():
         "record": recordsObj
     })
 
+
 @app.route("/user/search", methods=['GET'])
-def getAdvertisementsforSearch(): 
-    dbObject = Model() 
+def getAdvertisementsforSearch():
+    dbObject = Model()
     records = dbObject.getAllAdvertisement()
-    return json.dumps({ 
-        "record": records  
-    }) 
+    return json.dumps({
+        "record": records
+    })
 
 
 @app.route("/users/review", methods=["POST"])
@@ -349,6 +350,57 @@ def add_review():
             logging.log(msg="Unable to connect to Database",
                         level=logging.debug)
     return jsonify({"Result": "Inserted Successfully"})
+
+
+@app.route('/rentalForm', methods=['POST'])
+def rentalForm():
+    data = request.get_json()
+    print(data)
+    userId = 1007
+    formData = data['data']
+    firstname = formData['firstname']
+    lastname = formData['lastname']
+    email = formData['email']
+    phone = formData['phone']
+    dob = formData['dob']
+    status = formData['status']
+    employer = formData['employer']
+    income = formData['income']
+    files = formData['files']
+
+    cur = mysql.connection.cursor()
+    query = "INSERT INTO rentalApplication(firstname, lastname, email, userId, phone, employer, e_status, files, income, dob) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+
+    cur.execute(query, (firstname, lastname, email, userId,
+                        phone, employer, status, files, str(income), str(dob)))
+
+    mysql.connection.commit()
+    cur.close()
+
+    response = Response(json.dumps(
+        {"User": firstname}), status=200, mimetype="application/json")
+    return response
+
+
+@app.route('/myapplications', methods=['GET'])
+def myApplications():
+    cur = mysql.connection.cursor()
+    query_string = "SELECT * FROM rentalApplication"
+    cur.execute(query_string)
+
+    data = cur.fetchall()
+
+    string = data[0]['files']
+    filename = string.decode('ASCII')
+    # print(data[0]['firstname'])
+
+    formData = {'firstname': data[0]['firstname'], 'lastname': data[0]['lastname'], 'email': data[0]['email'], 'userid': data[0]['userId'], 'phone': data[0]
+                ['phone'], 'employer': data[0]['employer'], 'status': data[0]['e_status'], 'files': filename, 'income': data[0]['income'], 'dob': data[0]['dob']}
+
+    response = Response(json.dumps(
+        formData), status=200, mimetype="application/json")
+    print(response)
+    return response
 
 
 app.run(debug=True)
