@@ -1,5 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
+<<<<<<< HEAD:Rentickly/flask-backend/static/react/precache-manifest.2315fc2ac63cd58430923fd4ae63e5d1.js
     "revision": "71ce8f5425ed5c5626b8a89c0096e4c0",
     "url": "/static/react/../../templates/index.html"
   },
@@ -22,6 +23,30 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "889c39e416d53b85c6ec",
     "url": "/static/react/js/main.a78509aa.chunk.js"
+=======
+    "revision": "9ae1bdc4db02dd5e65f5c27bb85cc92a",
+    "url": "/static/react/../../templates/index.html"
+  },
+  {
+    "revision": "aac73a397a82a59c0d18",
+    "url": "/static/react/css/2.fa8b21ae.chunk.css"
+  },
+  {
+    "revision": "2fca2b07861e3440afdb",
+    "url": "/static/react/css/main.677cbe49.chunk.css"
+  },
+  {
+    "revision": "aac73a397a82a59c0d18",
+    "url": "/static/react/js/2.003a0f86.chunk.js"
+  },
+  {
+    "revision": "a3d18f90b591c6a1d51c562e175dfde4",
+    "url": "/static/react/js/2.003a0f86.chunk.js.LICENSE.txt"
+  },
+  {
+    "revision": "2fca2b07861e3440afdb",
+    "url": "/static/react/js/main.19e34798.chunk.js"
+>>>>>>> d372730da790e2d6a6c58c4b7b7c40755af24f02:Rentickly/flask-backend/static/react/precache-manifest.f92701a982f092b11b7214bb7ca63726.js
   },
   {
     "revision": "642bffd405cc52de04d1",

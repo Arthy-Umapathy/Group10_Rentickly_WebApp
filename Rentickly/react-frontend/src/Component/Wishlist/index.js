@@ -1,6 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
-import { Card, CardColumns, Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Card, CardColumns, Button, Row, Badge } from "react-bootstrap";
 import NavBar from "../LandingPage/NavBar";
+import "./SearchBar.css";
 
 import room1 from "../../assets/Room1.jpg";
 import room2 from "../../assets/Room2.gif";
@@ -74,10 +75,9 @@ const Property = [
 ];function Findroom (){
   const[rooms, setRooms] = useState([]);
   useEffect( () => {
-    fetch('http://0.0.0.0:5000/user/search').then(response =>
+    fetch('http://localhost:5000/user/search').then(response =>
       response.json().then(data => {
-
-        setRooms(data.Data)
+        setRooms(data.record)
       })
     )
   }, []);
@@ -86,16 +86,57 @@ const Property = [
     <div className="mt-5">
       <NavBar />
       <div class="search">
-      <input
-        type="text"
-        class="searchTerm"
-        placeholder="What are you looking for?"
-      />
-      <button type="submit" class="searchButton">
-        <i class="fa fa-search"></i>
-      </button>
+        <input
+          type="text"
+          class="searchTerm"
+          placeholder="What are you looking for?"
+        />
+        <button type="submit" class="searchButton">
+          <i class="fa fa-search"></i>
+        </button>
       </div>
-      <CardColumns className="container-fluid">
+      <Row className="container-fluid">
+        { rooms.length !== 0 ? (
+          rooms.map(room => {
+            return (
+              <Card
+                key={room[0]}
+                className="col-lg-3 mb-5 ml-5 mr-auto"
+                style={{ border: "none" }}
+              >
+                {/* <Card.Img
+                  variant="top"
+                  src={room.image}
+                  style={{ borderRadius: "10%" }}
+                /> */}
+                <Card.Body>
+                <Card.Title>{room[1]}</Card.Title>
+                <Card.Text className="pt-1">{room[3]}</Card.Text>
+                <Card.Text className="pt-1">{room[2]}</Card.Text>
+                <Card.Text>
+                  <strong>${room[4]}</strong>/Month
+                </Card.Text>
+                <Button
+                  onClick={() => {
+                    alert("Property has been added to your wishlist.!");
+                  }}
+                >
+                  Add to Wishlist
+                </Button>
+              </Card.Body>
+              </Card>
+            )
+          })
+        ) : (
+          <center className="container m-5">
+            <h2>No Result found!</h2>
+          </center>
+        )
+
+        }
+
+      </Row>
+      {/* <CardColumns className="container-fluid">
         {Property.map((room, index) => {
           return (
             <Card key={index} className="col-lg-12 mb-5 ml-auto mr-3">
@@ -117,7 +158,7 @@ const Property = [
             </Card>
           );
         })}
-      </CardColumns>
+      </CardColumns> */}
       <Footer />
     </div>
   );
