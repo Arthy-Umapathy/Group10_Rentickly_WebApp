@@ -30,6 +30,8 @@ import ViewAppointment from "./Component/ViewAppointment/ViewAppointment";
 import AppointmentsWithMe from "./Component/AppointmentsWithMe/AppointmentsWithMe";
 import MyAdvertisements from "./Component/Advertisements/MyAdvertisements";
 import ViewAdvertisement from "./Component/Advertisements/ViewAdvertisement";
+import RentalForm from "./Component/RentalApplication/RentalForm";
+import MyApplications from "./Component/MyRentalApplications/MyApplications";
 
 class App extends Component {
   render() {
@@ -59,6 +61,8 @@ class App extends Component {
           <Route exact path="/myAds/ad/:id" component={ViewAdvertisement} />
           {/* <Route exact path="/Search" component={Home} /> */}
           <Route exact path="/postAd" component={PostAdvertisement} />
+          <Route exact path="/rentalApp" component={RentalForm} />
+          <Route exact path="/myapps" component={MyApplications} />
           <Route
             exact
             path="/RentalApplication"

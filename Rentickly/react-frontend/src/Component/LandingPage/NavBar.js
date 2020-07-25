@@ -46,7 +46,7 @@ function NavBars() {
       </li>
       <li className="nav-item">
         <Link className="nav-link" to="/myAds">
-          myAds
+          My Advertisements
         </Link>
       </li>
     </ul>
@@ -88,8 +88,13 @@ function NavBars() {
         </Link>
       </li>
       <li className="nav__main-item">
-        <Link className="nav__bar-link" to="/RentalApplication">
+        <Link className="nav__bar-link" to="/rentalApp">
           Rental Application
+        </Link>
+      </li>
+      <li className="nav__main-item">
+        <Link className="nav__bar-link" to="/myapps">
+          View My Rental Application
         </Link>
       </li>
       <li className="nav__main-item">
