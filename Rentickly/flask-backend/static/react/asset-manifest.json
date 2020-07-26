@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/react/css/main.e0f9860d.chunk.css",
-    "main.js": "/static/react/js/main.8f626349.chunk.js",
-    "main.js.map": "/static/react/js/main.8f626349.chunk.js.map",
+    "main.css": "/static/react/css/main.c0974817.chunk.css",
+    "main.js": "/static/react/js/main.e45f5744.chunk.js",
+    "main.js.map": "/static/react/js/main.e45f5744.chunk.js.map",
     "runtime-main.js": "/static/react/js/runtime-main.8fa3ef7f.js",
     "runtime-main.js.map": "/static/react/js/runtime-main.8fa3ef7f.js.map",
-    "css/2.77c7e9d2.chunk.css": "/static/react/css/2.77c7e9d2.chunk.css",
-    "js/2.9e7a569c.chunk.js": "/static/react/js/2.9e7a569c.chunk.js",
-    "js/2.9e7a569c.chunk.js.map": "/static/react/js/2.9e7a569c.chunk.js.map",
+    "css/2.fa8b21ae.chunk.css": "/static/react/css/2.fa8b21ae.chunk.css",
+    "js/2.d126c7be.chunk.js": "/static/react/js/2.d126c7be.chunk.js",
+    "js/2.d126c7be.chunk.js.map": "/static/react/js/2.d126c7be.chunk.js.map",
     "../../templates/index.html": "/static/react/../../templates/index.html",
-    "css/2.77c7e9d2.chunk.css.map": "/static/react/css/2.77c7e9d2.chunk.css.map",
-    "css/main.e0f9860d.chunk.css.map": "/static/react/css/main.e0f9860d.chunk.css.map",
-    "js/2.9e7a569c.chunk.js.LICENSE.txt": "/static/react/js/2.9e7a569c.chunk.js.LICENSE.txt",
+    "css/2.fa8b21ae.chunk.css.map": "/static/react/css/2.fa8b21ae.chunk.css.map",
+    "css/main.c0974817.chunk.css.map": "/static/react/css/main.c0974817.chunk.css.map",
+    "js/2.d126c7be.chunk.js.LICENSE.txt": "/static/react/js/2.d126c7be.chunk.js.LICENSE.txt",
     "media/Room1.jpg": "/static/react/media/Room1.4866147e.jpg",
     "media/Room2.gif": "/static/react/media/Room2.457418c4.gif",
     "media/Room3.png": "/static/react/media/Room3.30d5710f.png",
@@ -21,19 +21,16 @@
     "media/all.min.css": "/static/react/media/fa-solid-900.f3a7d3b5.woff",
     "media/faq.jpg": "/static/react/media/faq.c17b4bd7.jpg",
     "media/house-logo.jpg": "/static/react/media/house-logo.511e38fb.jpg",
-    "media/image-12.png": "/static/react/media/image-12.72c2a95a.png",
-    "media/image-13.png": "/static/react/media/image-13.fd56ef2d.png",
-    "media/image-14.png": "/static/react/media/image-14.3d29590e.png",
     "media/img.jpg": "/static/react/media/img.520ab47f.jpg",
     "media/img2.jpg": "/static/react/media/img2.1301e57a.jpg",
-    "precache-manifest.cf383c4bfc0becc51889de2f8f5671d3.js": "/static/react/precache-manifest.cf383c4bfc0becc51889de2f8f5671d3.js",
+    "precache-manifest.ef33b3e7d85fb9dec77512b9a6025522.js": "/static/react/precache-manifest.ef33b3e7d85fb9dec77512b9a6025522.js",
     "service-worker.js": "/static/react/service-worker.js"
   },
   "entrypoints": [
     "js/runtime-main.8fa3ef7f.js",
-    "css/2.77c7e9d2.chunk.css",
-    "js/2.9e7a569c.chunk.js",
-    "css/main.e0f9860d.chunk.css",
-    "js/main.8f626349.chunk.js"
+    "css/2.fa8b21ae.chunk.css",
+    "js/2.d126c7be.chunk.js",
+    "css/main.c0974817.chunk.css",
+    "js/main.e45f5744.chunk.js"
   ]
 }
