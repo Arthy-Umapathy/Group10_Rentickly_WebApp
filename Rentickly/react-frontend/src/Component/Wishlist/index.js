@@ -7,12 +7,14 @@ import Footer from "../Footer/Footer";
 function Findroom (){
   const[rooms, setRooms] = useState([]);
   const[fRooms, setfRooms] = useState([]);
+  const[dRooms, setdRooms]= useState([]);
   const[searchTerm,setSearchTerm] = useState("");
-
+  
   useEffect( () => {
     fetch('http://localhost:5000/user/search').then(response =>
       response.json().then(data => {
         setRooms(data.record)
+        setdRooms(data.record)
       })
     )
   }, []);
@@ -23,26 +25,31 @@ function Findroom (){
   const handleChange = event => {
      fSearch = (event.target.value);
      console.log("assigned value to fSearch" + fSearch);
+     //assigning old values to rooms
+     console.log("assigning original values" + dRooms);
+     setRooms(dRooms);
    };
 
    //set the value after search button clicked
-
+  let eRooms=[];
   function filterRoom()
     {
-      console.log("before loop"+ fRooms)
-      console.log(searchTerm + " searchTerm in function");
       console.log("fSearch in function" + fSearch);
       console.log("final term set");
-      console.log("befor loop");
+      console.log("before set froom" + fRooms);
       //for filtered rooms
       for (let i=0;i<rooms.length;i++){
         if((rooms[i][1]).includes(fSearch))
         {
-          fRooms.push(rooms[i])
+          fRooms.push(rooms[i]);
         }
       }
-      console.log(fRooms);
-      console.log(rooms);
+      console.log(fRooms + "after loop");
+      //assigning filtered values to room
+      setRooms(fRooms);
+      console.log('After SetRooms (fRooms):',rooms);
+      setfRooms(eRooms);
+      console.log("froom after empty" + fRooms);
       console.log("for loop for filter done");
 
     }
@@ -98,7 +105,6 @@ function Findroom (){
         )
 
         }
-
       </Row>
       <Footer />
     </div>
