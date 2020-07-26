@@ -117,7 +117,7 @@ function NavBars() {
   const dividerbefore = (
     <ul className="nav__main-items">
       <li className="nav__main-item">
-        <Link className="nav__bar-link" to="/wishlist">
+        <Link className="nav__bar-link" to="/searchRoom">
           Search Rooms
         </Link>
       </li>
