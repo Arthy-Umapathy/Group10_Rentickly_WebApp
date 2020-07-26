@@ -23,7 +23,7 @@ import PostAdvertisement from "./Component/PostAdvertisement/PostAd";
 //import Home from "./Component/SearchBar/Home";
 import RentalApplication from "./Component/RentalApplication/RentalApplication";
 import BookAppointment from "./Component/BookAppointment/BookAppointment";
-import WishlistPage from "./Component/Wishlist/index";
+import SearchPage from "./Component/Searchlist/index";
 import ViewPost from "./Component/ViewPost/ViewPostPage";
 import ViewAppointment from "./Component/ViewAppointment/ViewAppointment";
 import AppointmentsWithMe from "./Component/AppointmentsWithMe/AppointmentsWithMe"; 
@@ -49,7 +49,7 @@ class App extends Component {
           <Route exact path="/AppointmentsWithMe" component={AppointmentsWithMe} />
           <Route exact path="/Review" component={Review} />
           <Route exact path="/ViewPost" component={ViewPost} />
-          <Route exact path="/searchRoom" component={WishlistPage} />
+          <Route exact path="/searchRoom" component={SearchPage} />
           <Route exact path="/myAds" component={MyAdvertisements} />
           <Route exact path="/myAds/ad/:id" component={ViewAdvertisement} />
           {/* <Route exact path="/Search" component={Home} /> */}
