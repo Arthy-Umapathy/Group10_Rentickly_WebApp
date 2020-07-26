@@ -103,7 +103,7 @@ function NavBars() {
         </Link>
       </li>
       <li className="nav__main-item">
-        <Link className="nav__bar-link" to="/Search">
+        <Link className="nav__bar-link" to="/searchRoom">
           Search Rooms
         </Link>
       </li>
