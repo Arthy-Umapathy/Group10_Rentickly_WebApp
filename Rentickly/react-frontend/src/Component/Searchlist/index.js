@@ -11,7 +11,7 @@ function Findroom (){
   const[searchTerm,setSearchTerm] = useState("");
   
   useEffect( () => {
-    fetch('http://localhost:5000/user/search').then(response =>
+    fetch('/user/search').then(response =>
       response.json().then(data => {
         setRooms(data.record)
         setdRooms(data.record)
